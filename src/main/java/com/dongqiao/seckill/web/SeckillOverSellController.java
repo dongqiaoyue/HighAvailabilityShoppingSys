@@ -19,7 +19,6 @@ public class SeckillOverSellController {
     private SeckillActivityService seckillActivityService;
 
     /**
-     * 简单 处理抢购请求
      * @param seckillActivityId
      * @return
      */
@@ -30,7 +29,6 @@ public class SeckillOverSellController {
     }
 
     /**
-     * 使用 lua 脚本处理抢购请求
      * @param seckillActivityId
      * @return
      */
@@ -38,7 +36,7 @@ public class SeckillOverSellController {
     @RequestMapping("/seckill/{seckillActivityId}")
     public String seckillCommodity(@PathVariable long seckillActivityId) {
         boolean stockValidateResult = seckillActivityService.seckillStockValidator(seckillActivityId);
-        return stockValidateResult ? "恭喜你秒杀成功" : "商品已经售完，下次再来";
+        return stockValidateResult ? "success" : "sold out";
     }
 
 }

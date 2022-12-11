@@ -48,7 +48,7 @@ public class SeckillActivityController {
     RedisService redisService;
 
     /**
-     * 查询秒杀活动的列表
+     * seckill activity list
      *
      * @param resultMap
      * @return
@@ -66,7 +66,7 @@ public class SeckillActivityController {
     }
 
     /**
-     * 秒杀商品详情
+     * commodity details
      * @param resultMap
      * @param seckillActivityId
      * @return
@@ -134,7 +134,6 @@ public class SeckillActivityController {
     }
 
     /**
-     * 跳转发布页
      * @return
      */
     @RequestMapping("/addSeckillActivity")
@@ -143,7 +142,7 @@ public class SeckillActivityController {
     }
 
     /**
-     * 处理抢购请求
+     * process seckill request
      * @param userId
      * @param seckillActivityId
      * @return
@@ -158,12 +157,12 @@ public class SeckillActivityController {
             /*
              * 判断用户是否在已购名单中
              */
-            if (redisService.isInLimitMember(seckillActivityId, userId)) {
-                //提示用户已经在限购名单中，返回结果
-                modelAndView.addObject("resultInfo", "对不起，您已经在限购名单中");
-                modelAndView.setViewName("seckill_result");
-                return modelAndView;
-            }
+//            if (redisService.isInLimitMember(seckillActivityId, userId)) {
+//                //提示用户已经在限购名单中，返回结果
+//                modelAndView.addObject("resultInfo", "对不起，您已经在限购名单中");
+//                modelAndView.setViewName("seckill_result");
+//                return modelAndView;
+//            }
             /*
              * 确认是否能够进行秒杀
              */
@@ -186,7 +185,7 @@ public class SeckillActivityController {
     }
 
     /**
-     * 订单查询
+     * check
      * @param orderNo
      * @return
      */
@@ -208,7 +207,7 @@ public class SeckillActivityController {
     }
 
     /**
-     * 订单支付
+     * payment
      * @return
      */
     @RequestMapping("/seckill/payOrder/{orderNo}")
