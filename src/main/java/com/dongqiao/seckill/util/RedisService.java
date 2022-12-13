@@ -38,7 +38,7 @@ public class RedisService {
         Jedis jedisClient = jedisPool.getResource();
         boolean sismember = jedisClient.sismember("seckillActivity_users:" + activityId, String.valueOf(userId));
         jedisClient.close();
-        log.info("userId:{}  activityId:{}  在已购名单中:{}", activityId, userId, sismember);
+        log.info("userId:{}  activityId:{}  is in the list:{}", activityId, userId, sismember);
         return sismember;
     }
 

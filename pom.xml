@@ -43,6 +43,7 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-core</artifactId>
@@ -78,6 +79,13 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

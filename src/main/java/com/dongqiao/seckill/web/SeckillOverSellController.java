@@ -1,5 +1,6 @@
 package com.dongqiao.seckill.web;
 
+import com.dongqiao.seckill.exception.ShopException;
 import com.dongqiao.seckill.services.SeckillActivityService;
 import com.dongqiao.seckill.services.SeckillOverSellService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class SeckillOverSellController {
      */
     @ResponseBody
 //    @RequestMapping("/seckill/{seckillActivityId}")
-    public String seckil(@PathVariable long seckillActivityId){
+    public String seckil(@PathVariable long seckillActivityId) throws ShopException {
        return seckillOverSellService.processSeckill(seckillActivityId);
     }
 

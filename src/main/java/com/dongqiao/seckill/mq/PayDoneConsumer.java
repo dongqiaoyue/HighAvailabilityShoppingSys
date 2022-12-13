@@ -3,6 +3,7 @@ package com.dongqiao.seckill.mq;
 import com.alibaba.fastjson.JSON;
 import com.dongqiao.seckill.db.dao.SeckillActivityDao;
 import com.dongqiao.seckill.db.po.Order;
+import com.dongqiao.seckill.exception.ShopException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
@@ -33,6 +34,10 @@ public class PayDoneConsumer implements RocketMQListener<MessageExt> {
         log.info("接收到创建订单请求：" + message);
         Order order = JSON.parseObject(message, Order.class);
         //2.扣减库存
-        seckillActivityDao.deductStock(order.getSeckillActivityId());
+        try {
+            seckillActivityDao.deductStock(order.getSeckillActivityId());
+        } catch (ShopException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

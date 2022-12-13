@@ -1,8 +1,20 @@
 package com.dongqiao.seckill.db.po;
 
+
+import org.springframework.stereotype.Component;
+
+import javax.persistence.*;
+
+@Component
+@Entity
+@Table(name = "seckill_user")
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_name")
     private String userName;
 
     private String address;

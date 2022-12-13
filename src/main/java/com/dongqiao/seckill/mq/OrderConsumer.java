@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.dongqiao.seckill.db.dao.OrderDao;
 import com.dongqiao.seckill.db.dao.SeckillActivityDao;
 import com.dongqiao.seckill.db.po.Order;
+import com.dongqiao.seckill.exception.ShopException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
@@ -35,7 +36,12 @@ public class OrderConsumer implements RocketMQListener<MessageExt> {
         Order order = JSON.parseObject(message, Order.class);
         order.setCreateTime(new Date());
         //2.扣减库存
-        boolean lockStockResult = seckillActivityDao.lockStock(order.getSeckillActivityId());
+        boolean lockStockResult = false;
+        try {
+            lockStockResult = seckillActivityDao.lockStock(order.getSeckillActivityId());
+        } catch (ShopException e) {
+            throw new RuntimeException(e);
+        }
         if (lockStockResult) {
             //订单状态 0:没有可用库存，无效订单 1:已创建等待付款
             order.setOrderStatus(1);
@@ -43,6 +49,10 @@ public class OrderConsumer implements RocketMQListener<MessageExt> {
             order.setOrderStatus(0);
         }
         //3.插入订单
-        orderDao.insertOrder(order);
+        try {
+            orderDao.insertOrder(order);
+        } catch (ShopException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

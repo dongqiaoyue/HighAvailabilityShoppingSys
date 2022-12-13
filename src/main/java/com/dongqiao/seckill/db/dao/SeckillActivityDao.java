@@ -1,23 +1,91 @@
 package com.dongqiao.seckill.db.dao;
 
 import com.dongqiao.seckill.db.po.SeckillActivity;
+import com.dongqiao.seckill.exception.ShopException;
+import org.hibernate.HibernateException;
+import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-public interface SeckillActivityDao {
+@Component
+public class SeckillActivityDao extends DAO {
 
-    public List<SeckillActivity> querySeckillActivitysByStatus(int activityStatus);
+    public List<SeckillActivity> querySeckillActivitysByStatus(int activityStatus) {
+        Query<SeckillActivity> query = getSession().createQuery("FROM SeckillActivity where activityStatus =: status");
+        query.setParameter("status", activityStatus);
+        List<SeckillActivity> list = query.list();
 
-    public void inertSeckillActivity(SeckillActivity seckillActivity);
+        return list;
+    }
 
-    public SeckillActivity querySeckillActivityById(long activityId);
+    public void inertSeckillActivity(SeckillActivity seckillActivity) throws ShopException {
+        try {
+            begin();
+            getSession().save(seckillActivity);
+            commit();
+        } catch (HibernateException e) {
+            rollback();
+            throw new ShopException("Could not insert", e);
+        }
+    }
 
-    public void updateSeckillActivity(SeckillActivity seckillActivity);
+    public SeckillActivity querySeckillActivityById(long activityId) {
+        return getSession().get(SeckillActivity.class, activityId);
+    }
 
-    public boolean deductStock(long activityId);
+    public void updateSeckillActivity(SeckillActivity seckillActivity) throws ShopException {
+        try {
+            begin();
+            getSession().update(seckillActivity);
+            commit();
+        } catch (HibernateException e) {
+            rollback();
+            throw new ShopException("Could not update", e);
+        }
+    }
 
-    public boolean lockStock(long activityId);
+    public boolean deductStock(long activityId) throws ShopException {
+        try {
+            begin();
+            Query query = getSession().createQuery("update SeckillActivity set lockStock=lockStock - 1 where id=:i");
+            query.setParameter("i", activityId);
+            query.executeUpdate();
+            commit();
+        } catch (HibernateException e) {
+            rollback();
+            throw new ShopException("Could not deduct", e);
+        }
 
-    void revertStock(Long seckillActivityId);
+        return true;
+    }
+
+    public boolean lockStock(long activityId) throws ShopException {
+        try {
+            begin();
+            Query query = getSession().createQuery("update SeckillActivity set lockStock=lockStock + 1 where id=:i and availableStock > 0");
+            query.setParameter("i", activityId);
+            query.executeUpdate();
+            commit();
+        } catch (HibernateException e) {
+            rollback();
+            throw new ShopException("Could not deduct", e);
+        }
+
+        return true;
+    }
+
+    public void revertStock(Long seckillActivityId) throws ShopException {
+        try {
+            begin();
+            Query query = getSession().createQuery("update SeckillActivity set lockStock=lockStock - 1, availableStock = availableStock + 1 where id=:i");
+            query.setParameter("i", seckillActivityId);
+            query.executeUpdate();
+            commit();
+        } catch (HibernateException e) {
+            rollback();
+            throw new ShopException("Could not deduct", e);
+        }
+    }
 
 }

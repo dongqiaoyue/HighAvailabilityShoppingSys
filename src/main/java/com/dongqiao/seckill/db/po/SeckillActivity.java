@@ -1,29 +1,46 @@
 package com.dongqiao.seckill.db.po;
 
+import org.springframework.stereotype.Component;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+@Component
+@Entity
+@Table(name = "seckill_activity")
 public class SeckillActivity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
+    @Column(name = "commodity_id")
     private Long commodityId;
 
+    @Column(name = "old_price")
     private BigDecimal oldPrice;
 
+    @Column(name = "seckill_price")
     private BigDecimal seckillPrice;
 
+    @Column(name = "activity_status")
     private Integer activityStatus;
 
+    @Column(name = "start_time")
     private Date startTime;
 
+    @Column(name = "end_time")
     private Date endTime;
 
+    @Column(name = "total_stock")
     private Long totalStock;
 
+    @Column(name = "available_stock")
     private Integer availableStock;
 
+    @Column(name = "lock_stock")
     private Long lockStock;
 
     public Long getId() {
@@ -113,4 +130,5 @@ public class SeckillActivity {
     public void setLockStock(Long lockStock) {
         this.lockStock = lockStock;
     }
+
 }

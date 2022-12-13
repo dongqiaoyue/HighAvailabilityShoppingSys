@@ -10,6 +10,7 @@ import com.dongqiao.seckill.db.dao.SeckillCommodityDao;
 import com.dongqiao.seckill.db.po.Order;
 import com.dongqiao.seckill.db.po.SeckillActivity;
 import com.dongqiao.seckill.db.po.SeckillCommodity;
+import com.dongqiao.seckill.exception.ShopException;
 import com.dongqiao.seckill.services.SeckillActivityService;
 import com.dongqiao.seckill.util.RedisService;
 import lombok.extern.slf4j.Slf4j;
@@ -113,7 +114,7 @@ public class SeckillActivityController {
             @RequestParam("startTime") String startTime,
             @RequestParam("endTime") String endTime,
             Map<String, Object> resultMap
-    ) throws ParseException {
+    ) throws ParseException, ShopException {
         startTime = startTime.substring(0, 10) +  startTime.substring(11);
         endTime = endTime.substring(0, 10) +  endTime.substring(11);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-ddhh:mm");

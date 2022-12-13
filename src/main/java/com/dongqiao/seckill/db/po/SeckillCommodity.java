@@ -1,12 +1,26 @@
 package com.dongqiao.seckill.db.po;
 
+
+import org.springframework.stereotype.Component;
+
+import javax.persistence.*;
+
+@Component
+@Entity
+@Table(name = "seckill_commodity")
 public class SeckillCommodity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "commodity_name")
     private String commodityName;
 
+    @Column(name = "commodity_desc")
     private String commodityDesc;
 
+    @Column(name = "commodity_price")
     private Integer commodityPrice;
 
     public Long getId() {

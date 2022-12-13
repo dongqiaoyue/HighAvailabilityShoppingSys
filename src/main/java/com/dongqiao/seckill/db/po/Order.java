@@ -1,22 +1,38 @@
 package com.dongqiao.seckill.db.po;
 
+import org.springframework.stereotype.Component;
+
+import javax.persistence.*;
 import java.util.Date;
 
+@Component
+@Entity
+@Table(name = "seckill_order")
 public class Order {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "order_no")
     private String orderNo;
 
+    @Column(name = "order_status")
     private Integer orderStatus;
 
+    @Column(name = "seckill_activity_id")
     private Long seckillActivityId;
 
+    @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "order_amount")
     private Long orderAmount;
 
+    @Column(name = "create_time")
     private Date createTime;
 
+    @Column(name = "pay_time")
     private Date payTime;
 
     public Long getId() {
