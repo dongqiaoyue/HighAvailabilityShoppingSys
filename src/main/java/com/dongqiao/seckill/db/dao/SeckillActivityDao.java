@@ -5,10 +5,11 @@ import com.dongqiao.seckill.exception.ShopException;
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+@Repository
 public class SeckillActivityDao extends DAO {
 
     public List<SeckillActivity> querySeckillActivitysByStatus(int activityStatus) {
@@ -48,7 +49,7 @@ public class SeckillActivityDao extends DAO {
     public boolean deductStock(long activityId) throws ShopException {
         try {
             begin();
-            Query query = getSession().createQuery("update SeckillActivity set lockStock=lockStock - 1 where id=:i");
+            Query query = getSession().createQuery("update SeckillActivity sec set sec.lockStock=sec.lockStock - 1 where sec.id=:i");
             query.setParameter("i", activityId);
             query.executeUpdate();
             commit();

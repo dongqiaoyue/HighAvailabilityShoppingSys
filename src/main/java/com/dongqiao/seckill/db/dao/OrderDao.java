@@ -2,11 +2,13 @@ package com.dongqiao.seckill.db.dao;
 
 import com.dongqiao.seckill.db.po.Order;
 import com.dongqiao.seckill.exception.ShopException;
-import org.springframework.stereotype.Component;
+import org.hibernate.query.Query;
+
 
 import org.hibernate.HibernateException;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class OrderDao extends DAO {
 
     public void insertOrder(Order order) throws ShopException {
@@ -21,7 +23,10 @@ public class OrderDao extends DAO {
     }
 
     public Order queryOrder(String orderNo) {
-        return getSession().get(Order.class, orderNo);
+//        return getSession().get(Order.class, orderNo);
+        Query query = getSession().createQuery("from Order where orderNo=:id");
+        query.setParameter("id", orderNo);
+         return (Order) query.uniqueResult();
     }
 
     public void updateOrder(Order order) throws ShopException {

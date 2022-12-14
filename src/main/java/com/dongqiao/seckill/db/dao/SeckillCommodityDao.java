@@ -2,8 +2,9 @@ package com.dongqiao.seckill.db.dao;
 
 import com.dongqiao.seckill.db.po.SeckillCommodity;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class SeckillCommodityDao extends DAO {
 
     public SeckillCommodity querySeckillCommodityById(long commodityId) {

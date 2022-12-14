@@ -10,8 +10,9 @@ import java.util.Date;
 @Entity
 @Table(name = "seckill_activity")
 public class SeckillActivity {
-    @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
 
     private String name;

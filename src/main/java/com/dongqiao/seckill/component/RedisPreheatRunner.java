@@ -12,11 +12,12 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Component
-public class RedisPreheatRunner  implements ApplicationRunner {
-    @Resource
+public class RedisPreheatRunner implements ApplicationRunner {
+
+    @Autowired
     RedisService redisService;
 
-    @Resource
+    @Autowired
     SeckillActivityDao seckillActivityDao;
 
     /**

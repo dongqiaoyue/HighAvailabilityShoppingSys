@@ -137,7 +137,7 @@ public class SeckillActivityController {
     /**
      * @return
      */
-    @RequestMapping("/addSeckillActivity")
+    @RequestMapping("/")
     public String addSeckillActivity(){
         return "add_activity";
     }

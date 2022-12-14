@@ -10,8 +10,9 @@ import javax.persistence.*;
 @Table(name = "seckill_commodity")
 public class SeckillCommodity {
 
-    @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
 
     @Column(name = "commodity_name")

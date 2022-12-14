@@ -10,8 +10,8 @@ import javax.persistence.*;
 @Table(name = "seckill_user")
 public class User {
 
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
 
     @Column(name = "user_name")

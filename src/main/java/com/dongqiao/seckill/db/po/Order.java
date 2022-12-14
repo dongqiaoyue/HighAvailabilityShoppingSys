@@ -10,8 +10,8 @@ import java.util.Date;
 @Table(name = "seckill_order")
 public class Order {
 
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
 
     @Column(name = "order_no")
