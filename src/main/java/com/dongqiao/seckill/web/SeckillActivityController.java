@@ -170,16 +170,16 @@ public class SeckillActivityController {
             stockValidateResult = seckillActivityService.seckillStockValidator(seckillActivityId);
             if (stockValidateResult) {
                 Order order = seckillActivityService.createOrder(seckillActivityId, userId);
-                modelAndView.addObject("resultInfo","秒杀成功，订单创建中，订单ID：" + order.getOrderNo());
+                modelAndView.addObject("resultInfo","Ordered success, Order Number：" + order.getOrderNo());
                 modelAndView.addObject("orderNo",order.getOrderNo());
                 //添加用户到已购名单中
                 redisService.addLimitMember(seckillActivityId, userId);
             } else {
-                modelAndView.addObject("resultInfo","对不起，商品库存不足");
+                modelAndView.addObject("resultInfo","Sold out");
             }
         } catch (Exception e) {
-            log.error("秒杀系统异常" + e.toString());
-            modelAndView.addObject("resultInfo","秒杀失败");
+            log.error("Error:" + e.toString());
+            modelAndView.addObject("resultInfo","Fail");
         }
         modelAndView.setViewName("seckill_result");
         return modelAndView;
@@ -192,7 +192,7 @@ public class SeckillActivityController {
      */
     @RequestMapping("/seckill/orderQuery/{orderNo}")
     public ModelAndView orderQuery(@PathVariable String orderNo) {
-        log.info("订单查询，订单号：" + orderNo);
+        log.info("Order querying, order number:  " + orderNo);
         Order order = orderDao.queryOrder(orderNo);
         ModelAndView modelAndView = new ModelAndView();
 
