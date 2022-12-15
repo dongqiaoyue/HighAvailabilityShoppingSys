@@ -36,14 +36,15 @@ public class PayStatusCheckListener implements RocketMQListener<MessageExt> {
     @Transactional
     public void onMessage(MessageExt messageExt) {
         String message = new String(messageExt.getBody(), StandardCharsets.UTF_8);
-        log.info("接收到订单支付状态校验消息:" + message);
+        log.info("Received order status check request: " + message);
         Order order = JSON.parseObject(message, Order.class);
         //1.查询订单
         Order orderInfo = orderDao.queryOrder(order.getOrderNo());
+
         //2.判读订单是否完成支付
         if (orderInfo.getOrderStatus() != 2) {
             //3.未完成支付关闭订单
-            log.info("未完成支付关闭订单,订单号：" + orderInfo.getOrderNo());
+            log.info("The user hasn't pay: " + orderInfo.getOrderNo());
             orderInfo.setOrderStatus(99);
             try {
                 orderDao.updateOrder(orderInfo);
@@ -57,9 +58,9 @@ public class PayStatusCheckListener implements RocketMQListener<MessageExt> {
                 throw new RuntimeException(e);
             }
             // 恢复 redis 库存
-            redisService.revertStock("stock:" + order.getSeckillActivityId());
+//            redisService.revertStock("stock:" + order.getSeckillActivityId());
             //5.将用户从已购名单中移除
-            redisService.removeLimitMember(order.getSeckillActivityId(), order.getUserId());
+//            redisService.removeLimitMember(order.getSeckillActivityId(), order.getUserId());
         }
     }
 }

@@ -49,7 +49,7 @@ public class SeckillActivityDao extends DAO {
     public boolean deductStock(long activityId) throws ShopException {
         try {
             begin();
-            Query query = getSession().createQuery("update SeckillActivity sec set sec.lockStock=sec.lockStock - 1 where sec.id=:i");
+            Query query = getSession().createQuery("update SeckillActivity set lockStock = lockStock - 1 where id = :i");
             query.setParameter("i", activityId);
             query.executeUpdate();
             commit();
@@ -64,28 +64,28 @@ public class SeckillActivityDao extends DAO {
     public boolean lockStock(long activityId) throws ShopException {
         try {
             begin();
-            Query query = getSession().createQuery("update SeckillActivity set lockStock=lockStock + 1 where id=:i and availableStock > 0");
+            Query query = getSession().createQuery("update SeckillActivity set availableStock = availableStock - 1, lockStock = lockStock + 1 where id = :i and availableStock > 0");
             query.setParameter("i", activityId);
             query.executeUpdate();
             commit();
         } catch (HibernateException e) {
             rollback();
-            throw new ShopException("Could not deduct", e);
+            throw new ShopException("Could not lock", e);
         }
 
         return true;
     }
 
-    public void revertStock(Long seckillActivityId) throws ShopException {
+    public void revertStock(Long activityId) throws ShopException {
         try {
             begin();
-            Query query = getSession().createQuery("update SeckillActivity set lockStock=lockStock - 1, availableStock = availableStock + 1 where id=:i");
-            query.setParameter("i", seckillActivityId);
+            Query query = getSession().createQuery("update SeckillActivity set lockStock = lockStock - 1, availableStock = availableStock + 1 where id = :i");
+            query.setParameter("i", activityId);
             query.executeUpdate();
             commit();
         } catch (HibernateException e) {
             rollback();
-            throw new ShopException("Could not deduct", e);
+            throw new ShopException("Could not revert", e);
         }
     }
 

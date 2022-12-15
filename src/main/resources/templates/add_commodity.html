@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-    <title>Add Sale Event</title>
+    <title>Add Commodity</title>
     <link rel="stylesheet" type="text/css" href="/css/all.css" />
     <link rel="stylesheet" type="text/css" href="/css/pages-getOrderInfo.css" />
 </head>
@@ -27,14 +27,9 @@
 <!--                    </ul>-->
                     <div class="fr typelist">
                         <ul class="types">
-<!--                            <li class="f-item"><span>我的订单</span></li>-->
-
-<!--                            <li class="f-item"><span><a href="cart.html" target="_blank">我的购物车</a></span></li>-->
-<!--                            <li class="f-item"><span>企业采购</span></li>-->
                             <li class="f-item"><span><a th:href="@{/seckills}" target="_blank">Products</a></span></li>
                             <li class="f-item"><span><a th:href="@{/}" target="_blank">Events</a></span></li>
                             <li class="f-item"><span><a th:href="@{/addProduct}" target="_blank">Commodity</a></span></li>
-<!--                            <li class="f-item"><span>网站导航</li>-->
                         </ul>
                     </div>
 
@@ -74,7 +69,7 @@
     <!--主内容-->
     <div class="checkout py-container">
         <div class="checkout-tit">
-            <h4 class="tit-txt">Add new event</h4>
+            <h4 class="tit-txt">Add Products</h4>
         </div>
         <div class="checkout-steps">
             <div class="hr"></div>
@@ -85,14 +80,10 @@
                     <ul class="send-detail">
                         <li>
                             <div class="sendGoods">
-                                <form th:action="@{/addSeckillActivityAction}" method="post">
-                                    Event name: <input type="text" name="name"><br><br>
-                                    Product ID: <input type="text" name="commodityId"><br><br>
-                                    Event price: <input type="text" name="seckillPrice"><br><br>
-                                    Original price: <input type="text" name="oldPrice"><br><br>
-                                    Number of products: <input type="text" name="seckillNumber"><br><br>
-                                    Start date: <input type="datetime-local" name="startTime" ><br><br>
-                                    End date: <input type="datetime-local" name="endTime"><br><br>
+                                <form th:action="@{/addCommodityAction}" method="post">
+                                    Product name: <input type="text" name="commodityName"><br><br>
+                                    Product description: <input type="text" name="commodityDesc"><br><br>
+                                    Event price: <input type="text" name="commodityPrice"><br><br>
                                     <input type="submit" value="submit">
                                 </form>
                             </div>

@@ -19,7 +19,7 @@ public class RedisDemoTest {
 
     @Test
     public void pushInfoToRedisTest() {
-        seckillActivityService.pushSeckillInfoToRedis(19);
+        seckillActivityService.pushSeckillInfoToRedis(35);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class RedisDemoTest {
 
     @Test
     public void getStockTest(){
-     String stock =  redisService.getValue("stock:19");
+     String stock =  redisService.getValue("stock:36");
      System.out.println(stock);
     }
 

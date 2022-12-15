@@ -123,14 +123,14 @@ public class RedisService {
 
             Long stock = (Long) jedisClient.eval(script, Collections.singletonList(key), Collections.emptyList());
             if (stock < 0) {
-                System.out.println("库存不足");
+                System.out.println("out of stock");
                 return false;
             } else {
-                System.out.println("恭喜，抢购成功");
+                System.out.println("success!!");
             }
             return true;
         } catch (Throwable throwable) {
-            System.out.println("库存扣减失败：" + throwable.toString());
+            System.out.println("inventory deduct fail: " + throwable.toString());
             return false;
         }
     }

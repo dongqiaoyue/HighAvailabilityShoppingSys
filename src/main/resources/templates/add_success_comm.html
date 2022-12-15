@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
   <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-  <title>Add Sale Event</title>
+  <title>Add Commodity</title>
   <link rel="stylesheet" type="text/css" href="/css/all.css" />
   <link rel="stylesheet" type="text/css" href="/css/pages-getOrderInfo.css" />
 </head>
@@ -41,7 +41,7 @@
     <!--主内容-->
     <div class="checkout py-container">
       <div class="checkout-tit">
-        <h4 class="tit-txt">Add sale event</h4>
+        <h4 class="tit-txt">Add commodity</h4>
       </div>
       <div class="checkout-steps">
         <div class="hr"></div>
@@ -70,10 +70,9 @@
               </style>
               <div class="dialog-card">
                 <h1>Add success</h1>
-                <p>Event name: <span th:text="${seckillActivity.name}"></span></p>
-                <p>Original price: <span th:text="${seckillActivity.oldPrice}"></span></p>
-                <p>Event price: <span th:text="${seckillActivity.seckillPrice}"></span></p>
-                <p>Number of product: <span th:text="${seckillActivity.availableStock}"></span></p>
+                <p>Commodity name: <span th:text="${seckillCommodity.commodityName}"></span></p>
+                <p>Commodity price: <span th:text="${seckillCommodity.commodityPrice}"></span></p>
+                <p>Desciption: <span th:text="${seckillCommodity.commodityDesc}"></span></p>
               </div>
             </ul>
           </div>

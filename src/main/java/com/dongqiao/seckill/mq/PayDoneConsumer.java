@@ -31,7 +31,7 @@ public class PayDoneConsumer implements RocketMQListener<MessageExt> {
     public void onMessage(MessageExt messageExt) {
         //1.解析创建订单请求消息
         String message = new String(messageExt.getBody(), StandardCharsets.UTF_8);
-        log.info("接收到创建订单请求：" + message);
+        log.info("Received order create request: " + message);
         Order order = JSON.parseObject(message, Order.class);
         //2.扣减库存
         try {

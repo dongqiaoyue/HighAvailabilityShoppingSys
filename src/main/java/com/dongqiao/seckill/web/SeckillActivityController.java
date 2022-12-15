@@ -61,7 +61,7 @@ public class SeckillActivityController {
             resultMap.put("seckillActivities", seckillActivities);
             return "seckill_activity";
         } catch (BlockException ex) {
-            log.error("查询秒杀活动的列表被限流 "+ex.toString());
+            log.error(ex.toString());
             return "wait";
         }
     }
@@ -130,6 +130,7 @@ public class SeckillActivityController {
         seckillActivity.setStartTime(format.parse(startTime));
         seckillActivity.setEndTime(format.parse(endTime));
         seckillActivityDao.inertSeckillActivity(seckillActivity);
+        seckillActivityService.pushSeckillInfoToRedis(seckillActivity.getId());
         resultMap.put("seckillActivity", seckillActivity);
         return "add_success";
     }
@@ -140,6 +141,31 @@ public class SeckillActivityController {
     @RequestMapping("/")
     public String addSeckillActivity(){
         return "add_activity";
+    }
+
+    /**
+     * @return
+     */
+    @RequestMapping("/addProduct")
+    public String addCommodity(){
+        return "add_commodity";
+    }
+
+    @RequestMapping("/addCommodityAction")
+    public String addSeckillActivityAction(
+            @RequestParam("commodityName") String commodityName,
+            @RequestParam("commodityDesc") String commodityDesc,
+            @RequestParam("commodityPrice") Integer commodityPrice,
+            Map<String, Object> resultMap
+    ) throws ParseException, ShopException {
+
+        SeckillCommodity comm = new SeckillCommodity();
+        comm.setCommodityDesc(commodityDesc);
+        comm.setCommodityName(commodityName);
+        comm.setCommodityPrice(commodityPrice);
+        seckillCommodityDao.insertCommodity(comm);
+        resultMap.put("seckillCommodity", comm);
+        return "add_success_comm";
     }
 
     /**
@@ -173,7 +199,7 @@ public class SeckillActivityController {
                 modelAndView.addObject("resultInfo","Ordered success, Order Number：" + order.getOrderNo());
                 modelAndView.addObject("orderNo",order.getOrderNo());
                 //添加用户到已购名单中
-                redisService.addLimitMember(seckillActivityId, userId);
+//                redisService.addLimitMember(seckillActivityId, userId);
             } else {
                 modelAndView.addObject("resultInfo","Sold out");
             }
