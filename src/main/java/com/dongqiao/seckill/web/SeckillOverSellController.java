@@ -24,7 +24,7 @@ public class SeckillOverSellController {
      * @return
      */
     @ResponseBody
-//    @RequestMapping("/seckill/{seckillActivityId}")
+    @RequestMapping("/seckill/{seckillActivityId}")
     public String seckil(@PathVariable long seckillActivityId) throws ShopException {
        return seckillOverSellService.processSeckill(seckillActivityId);
     }
@@ -34,7 +34,7 @@ public class SeckillOverSellController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/seckill/{seckillActivityId}")
+//    @RequestMapping("/seckill/{seckillActivityId}")
     public String seckillCommodity(@PathVariable long seckillActivityId) {
         boolean stockValidateResult = seckillActivityService.seckillStockValidator(seckillActivityId);
         return stockValidateResult ? "success" : "sold out";

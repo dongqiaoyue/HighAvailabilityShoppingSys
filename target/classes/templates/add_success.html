@@ -74,6 +74,7 @@
                 <p>Original price: <span th:text="${seckillActivity.oldPrice}"></span></p>
                 <p>Event price: <span th:text="${seckillActivity.seckillPrice}"></span></p>
                 <p>Number of product: <span th:text="${seckillActivity.availableStock}"></span></p>
+                <p>Image: <image th:src="@{'img/' + ${seckillActivity.activityImg}}"></p>
               </div>
             </ul>
           </div>

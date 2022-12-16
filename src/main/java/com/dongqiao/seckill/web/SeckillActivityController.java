@@ -50,7 +50,7 @@ public class SeckillActivityController {
 
     /**
      * seckill activity list
-     *
+     * return html page
      * @param resultMap
      * @return
      */
@@ -96,6 +96,7 @@ public class SeckillActivityController {
         resultMap.put("seckillActivity", seckillActivity);
         resultMap.put("seckillCommodity", seckillCommodity);
         resultMap.put("seckillPrice", seckillActivity.getSeckillPrice());
+        resultMap.put("activityImg", seckillActivity.getActivityImg());
         resultMap.put("oldPrice", seckillActivity.getOldPrice());
         resultMap.put("commodityId", seckillActivity.getCommodityId());
         resultMap.put("commodityName", seckillCommodity.getCommodityName());
@@ -113,6 +114,7 @@ public class SeckillActivityController {
             @RequestParam("seckillNumber") long seckillNumber,
             @RequestParam("startTime") String startTime,
             @RequestParam("endTime") String endTime,
+            @RequestParam("activityImg") String activityImg,
             Map<String, Object> resultMap
     ) throws ParseException, ShopException {
         startTime = startTime.substring(0, 10) +  startTime.substring(11);
@@ -129,6 +131,7 @@ public class SeckillActivityController {
         seckillActivity.setActivityStatus(1);
         seckillActivity.setStartTime(format.parse(startTime));
         seckillActivity.setEndTime(format.parse(endTime));
+        seckillActivity.setActivityImg(activityImg);
         seckillActivityDao.inertSeckillActivity(seckillActivity);
         seckillActivityService.pushSeckillInfoToRedis(seckillActivity.getId());
         resultMap.put("seckillActivity", seckillActivity);
@@ -244,14 +247,13 @@ public class SeckillActivityController {
     }
 
     /**
-     * 获取当前服务器端的时间
      * @return
      */
     @ResponseBody
     @RequestMapping("/seckill/getSystemTime")
     public String getSystemTime() {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        String date = df.format(new Date());// new Date()为获取当前系统时间
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = df.format(new Date());
         return date;
     }
 }

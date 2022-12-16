@@ -44,6 +44,10 @@ public class SeckillActivity {
     @Column(name = "lock_stock")
     private Long lockStock;
 
+    @Column(name = "activity_img")
+    private String activityImg;
+
+
     public Long getId() {
         return id;
     }
@@ -132,4 +136,11 @@ public class SeckillActivity {
         this.lockStock = lockStock;
     }
 
+    public String getActivityImg() {
+        return activityImg;
+    }
+
+    public void setActivityImg(String activityImg) {
+        this.activityImg = activityImg;
+    }
 }
